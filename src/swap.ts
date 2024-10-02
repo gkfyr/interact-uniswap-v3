@@ -1,33 +1,32 @@
 import "dotenv/config";
-import { ethers } from "ethers";
+
 import UniswapV3SwapRouterArtifact from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
+
+import { ethers } from "ethers";
 import ERC20ABI from "../abis/ERC20.json";
 import { address } from "./address";
-// 유니스왑 V3 Router 주소 (Arbitrum)
+
+// Arbitrum RPC 노드 연결
+const provider = new ethers.JsonRpcProvider("https://arb1.arbitrum.io/rpc");
+
 const swapRouterAddress = address.swapRouterAddress;
 
-// Uniswap V3 Router의 ABI (swapExactInputSingle 함수)
+// 지갑 생성
+const privateKey = process.env.PRIVATE_KEY; // 사용자 개인키
+const wallet = new ethers.Wallet(privateKey!, provider);
+
 const { abi: uniswapV3SwapRouterABI } = UniswapV3SwapRouterArtifact;
+const routerContract = new ethers.Contract(swapRouterAddress, uniswapV3SwapRouterABI, wallet);
 
-async function swapTokens() {
-  // RPC 노드 연결
-  const provider = new ethers.JsonRpcProvider("https://arb1.arbitrum.io/rpc");
-
-  // 사용자의 지갑
-  const privateKey = "YOUR_PRIVATE_KEY"; // 사용자 개인키
-  const wallet = new ethers.Wallet(privateKey, provider);
-
-  // 유니스왑 V3 Router 컨트랙트 객체 생성
-  const routerContract = new ethers.Contract(swapRouterAddress, uniswapV3SwapRouterABI, wallet);
-
+const swapWithExactInputSingle = async () => {
   // 스왑할 토큰 정보 (예: WETH -> USDC)
-  const tokenIn = ""; // WETH 주소
-  const tokenOut = ""; // USDC 주소
-  const fee = 3000; // 0.3% 풀 사용
+  const tokenIn = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"; // WETH 주소
+  const tokenOut = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"; // USDC 주소
+  const fee = 500; // 0.05% 풀 사용
   const recipient = wallet.address; // 스왑 결과를 받을 주소 (보통 사용자 본인의 주소)
   const deadline = Math.floor(Date.now() / 1000) + 60 * 10; // 10분 후 트랜잭션 마감
-  const amountIn = ethers.parseUnits("0.1", 18); // 스왑할 0.1 WETH (단위: 18 decimals)
-  const amountOutMinimum = ethers.parseUnits("1", 6); // 최소 1 USDC 수령 (단위: 6 decimals)
+  const amountIn = ethers.parseUnits("0.0005", 18); // 스왑할 WETH (단위: 18 decimals)
+  const amountOutMinimum = ethers.parseUnits("0.5", 6); // 최소 USDC 수령 (단위: 6 decimals)
 
   try {
     // 토큰 승인: 먼저 WETH를 유니스왑 V3 Router에 사용하도록 승인
@@ -55,6 +54,6 @@ async function swapTokens() {
   } catch (error) {
     console.error("An error occured during swap:", error);
   }
-}
+};
 
-swapTokens();
+swapWithExactInputSingle();

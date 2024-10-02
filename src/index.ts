@@ -36,7 +36,11 @@ const getPoolInfo = async () => {
 const getPoolPrice = async () => {
   try {
     const { sqrtPriceX96, token0Decimals, token1Decimals } = await getPoolInfo();
-    console.log(calculatePriceFromSqrtPriceX96(sqrtPriceX96, token0Decimals, token1Decimals));
+
+    const buyOneOfToken0 = calculatePriceFromSqrtPriceX96(sqrtPriceX96, token0Decimals, token1Decimals);
+    const buyOneOfToken1 = 1 / buyOneOfToken0;
+    console.log("price of token0 in value of token1 : ", buyOneOfToken0);
+    console.log("price of token1 in value of token0 : ", buyOneOfToken1);
   } catch (error) {
     console.error("Error fetching pool price:", error);
   }

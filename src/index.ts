@@ -1,21 +1,18 @@
 import { ethers } from "ethers";
 import UniswapV3PoolArtifact from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
-import UniswapV3FactoryArtifact from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
 import ERC20ABI from "../abis/ERC20.json";
+import { address } from "./address";
 
 // Arbitrum RPC 노드 연결
 const provider = new ethers.JsonRpcProvider("https://arb1.arbitrum.io/rpc");
 
 // 유니스왑 V3 풀 컨트랙트 주소 ETH / USDC
-const poolAddress = "0xC6962004f452bE9203591991D15f6b388e09E8D0";
-const factoryAddress = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
+const poolAddress = address.poolAddress;
 
 const { abi: UniswapV3PoolABI } = UniswapV3PoolArtifact;
-const { abi: UniswapV3FactoryABI } = UniswapV3FactoryArtifact;
 
 // 유니스왑 풀 컨트랙트 객체 생성
 const poolContract = new ethers.Contract(poolAddress, UniswapV3PoolABI, provider);
-const factoryContract = new ethers.Contract(factoryAddress, UniswapV3FactoryABI, provider);
 
 const getPoolInfo = async () => {
   const slot0 = await poolContract.slot0();

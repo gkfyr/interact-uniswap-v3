@@ -9,8 +9,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@thanpolas/univ3prices": "^3.0.2",
     "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v3-periphery": "^1.4.4",
+    "dotenv": "^16.4.5",
     "ethers": "^6.13.2",
     "ts-node": "^10.9.2"
   }

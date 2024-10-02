@@ -1,0 +1,17 @@
+{
+  "name": "interact-uniswap-v3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@thanpolas/univ3prices": "^3.0.2",
+    "@uniswap/v3-core": "^1.0.1",
+    "ethers": "^6.13.2",
+    "ts-node": "^10.9.2"
+  }
+}

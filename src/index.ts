@@ -1,12 +1,13 @@
 import { ethers } from "ethers";
 import UniswapV3PoolArtifact from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import ERC20ABI from "../abis/ERC20.json";
+import { address } from "./address";
 
 // Arbitrum RPC 노드 연결
 const provider = new ethers.JsonRpcProvider("https://public-en.node.kaia.io");
 
 // 유니스왑 V3 풀 컨트랙트 주소 ETH / USDC
-const poolAddress = "0xb64ba987ed3bd9808dbcc19ee3c2a3c79a977e66";
+const poolAddress = address.poolAddress;
 
 const { abi: UniswapV3PoolABI } = UniswapV3PoolArtifact;
 

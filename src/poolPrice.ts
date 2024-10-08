@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import UniswapV3PoolArtifact from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import ERC20ABI from "../abis/ERC20.json";
-import { address } from "./utils/address";
+import { address } from "../utils/address";
 
 // Arbitrum RPC 노드 연결
 const provider = new ethers.JsonRpcProvider("https://public-en.node.kaia.io");

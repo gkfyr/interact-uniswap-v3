@@ -1,9 +1,9 @@
 import "dotenv/config";
 import UniswapV3SwapRouterArtifact from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
 import { ethers } from "ethers";
-import ERC20ABI from "../abis/ERC20.json";
-import { address } from "./utils/address";
-import { MAX_INT_256 } from "./utils/constants";
+import ERC20ABI from "../../abis/ERC20.json";
+import { address } from "../../utils/address";
+import { MAX_INT_256 } from "../../utils/constants";
 
 // Arbitrum RPC 노드 연결
 const provider = new ethers.JsonRpcProvider("https://arb1.arbitrum.io/rpc");

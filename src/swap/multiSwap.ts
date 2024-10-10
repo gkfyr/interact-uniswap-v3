@@ -1,5 +1,5 @@
 import "dotenv/config";
-import UniswapV3SwapRouterArtifact from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
+import { abi as uniswapV3SwapRouterABI } from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
 import { ethers } from "ethers";
 import ERC20ABI from "../../abis/ERC20.json";
 import { address } from "../../utils/address";
@@ -13,16 +13,13 @@ const privateKey = process.env.PRIVATE_KEY!;
 const signer = new ethers.Wallet(privateKey, provider);
 
 // 유니스왑 V3 SwapRouter 주소 및 ABI
-const { abi: uniswapV3SwapRouterABI } = UniswapV3SwapRouterArtifact;
 const routerContract = new ethers.Contract(address.UniswapV3SwapRouterAddress, uniswapV3SwapRouterABI, signer);
 
 const WETHAddress = address.WETHAddress;
 const DAIAddress = address.DAIAddress;
 const USDCAddress = address.USDCAddress;
 
-const ETHDAIPoolAddress = "0xA961F0473dA4864C5eD28e00FcC53a3AAb056c1b";
 const ETHDAIPoolFee = 3000; // 0.3%
-const DAIUSDCPoolAddress = "0x7CF803e8d82A50504180f417B8bC7a493C0a0503";
 const DAIUSDCPoolFee = 100; // 0.01%
 
 const path = ethers.concat([
@@ -58,7 +55,7 @@ const swapWithExactInput = async (params: {
 }) => {
   try {
     // 토큰 승인: 먼저 WETH를 유니스왑 V3 Router에 사용하도록 승인
-    // await approveToken(WETHAddress, MAX_INT_256, signer);
+    await approveToken(WETHAddress, MAX_INT_256, signer);
 
     // 스왑 트랜잭션 생성
     const swapTx = await routerContract.exactInput(params);
@@ -72,10 +69,4 @@ const swapWithExactInput = async (params: {
 };
 
 // 스왑 실행
-
-const swap = async () => {
-  await approveToken(USDCAddress, MAX_INT_256, signer);
-  swapWithExactInput(swapParams);
-};
-
-swap();
+swapWithExactInput(swapParams);

@@ -1,5 +1,5 @@
 import "dotenv/config";
-import UniswapV3SwapRouterArtifact from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
+import { abi as uniswapV3SwapRouterABI } from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
 import { ethers } from "ethers";
 import ERC20ABI from "../../abis/ERC20.json";
 import { address } from "../../utils/address";
@@ -12,7 +12,6 @@ const privateKey = process.env.PRIVATE_KEY!;
 const wallet = new ethers.Wallet(privateKey, provider);
 
 // 유니스왑 V3 SwapRouter 주소 및 ABI
-const { abi: uniswapV3SwapRouterABI } = UniswapV3SwapRouterArtifact;
 const swapRouterAddress = address.UniswapV3SwapRouterAddress;
 
 const routerContract = new ethers.Contract(swapRouterAddress, uniswapV3SwapRouterABI, wallet);
